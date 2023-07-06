@@ -23,10 +23,12 @@ func InitDB() *gorm.DB {
 			panic("connectionString error")
 		}
 		return DB
+	} else {
+		fmt.Println("DB_DRIVER not supported")
+		log.Println(err)
+		return nil
 	}
-	fmt.Println("DB_DRIVER not supported")
-	log.Println(err)
-	return nil
+
 }
 
 func GetDBInstance() *gorm.DB {
