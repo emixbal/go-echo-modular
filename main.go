@@ -4,12 +4,20 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
+
+	"go-echo-modular/config"
+	"go-echo-modular/database"
 )
 
 func main() {
-	e := echo.New()
-	e.GET("/", func(c echo.Context) error {
+	app := echo.New()
+
+	config.InitDB()
+	db := config.DB
+	database.InitMigration(db)
+
+	app.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Hello, World!")
 	})
-	e.Logger.Fatal(e.Start(":1323"))
+	app.Logger.Fatal(app.Start(":1323"))
 }
