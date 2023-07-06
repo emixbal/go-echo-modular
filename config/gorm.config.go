@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+	"log"
 	"os"
 
 	"gorm.io/driver/mysql"
@@ -24,6 +25,7 @@ func InitDB() *gorm.DB {
 		return DB
 	}
 	fmt.Println("DB_DRIVER not supported")
+	log.Println(err)
 	return nil
 }
 
