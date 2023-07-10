@@ -5,6 +5,7 @@ import (
 
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 
 	"go-echo-modular/config"
 	"go-echo-modular/database"
@@ -12,7 +13,6 @@ import (
 )
 
 func main() {
-
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
@@ -26,5 +26,9 @@ func main() {
 
 	router.Init(e)
 
+	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
+		Format: "time=${time_rfc3339}, method=${method}, uri=${uri}, status=${status}, latency=${latency_human}\n",
+		Output: e.Logger.Output(),
+	}))
 	e.Logger.Fatal(e.Start(":1323"))
 }
