@@ -17,7 +17,7 @@ func Fetch(*echo.Map) helpers.Response {
 	db := config.GetDBInstance()
 
 	if result := db.Find(&roles); result.Error != nil {
-		log.Print("error Fetch AcademicYearList")
+		log.Print("error Fetch")
 		log.Print(result.Error)
 
 		res.Status = http.StatusInternalServerError
