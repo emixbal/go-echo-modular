@@ -6,7 +6,7 @@ import (
 	"gorm.io/gorm"
 )
 
-type Model struct {
+type Role struct {
 	ID        uint           `json:"id" gorm:"primarykey"`
 	Name      string         `json:"name" gorm:"size:20"`
 	IsActive  bool           `json:"is_active,omitempty" gorm:"default:true"`

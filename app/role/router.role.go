@@ -1,6 +1,7 @@
 package role
 
 import (
+	"go-echo-modular/app/role/handlers"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -12,4 +13,6 @@ func Router(e *echo.Echo) {
 	router.GET("", func(c echo.Context) error {
 		return c.String(http.StatusOK, "roles ep")
 	})
+
+	router.POST("", handlers.Create)
 }

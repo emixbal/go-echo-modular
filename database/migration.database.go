@@ -1,13 +1,13 @@
 package database
 
 import (
-	"go-echo-modular/app/role"
+	role "go-echo-modular/app/role/models"
 
 	"gorm.io/gorm"
 )
 
 func InitMigration(db *gorm.DB) {
 	db.AutoMigrate(
-		&role.Model{},
+		&role.Role{},
 	)
 }
