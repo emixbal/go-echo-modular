@@ -31,8 +31,11 @@ func Update(id string, p *requests.RoleUpdateForm) helpers.Response {
 	}
 
 	role.Name = p.Name
-
 	db.Save(&role)
+
+	res.Status = http.StatusOK
+	res.Message = "ok"
+	res.Data = role
 
 	return res
 }
