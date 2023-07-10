@@ -10,5 +10,6 @@ func Router(e *echo.Echo) {
 	router := e.Group("roles")
 
 	router.GET("", handlers.Fetch)
+	router.GET("/:id", handlers.Detail)
 	router.POST("", handlers.Create)
 }
