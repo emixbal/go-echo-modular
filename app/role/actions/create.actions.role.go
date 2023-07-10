@@ -15,6 +15,8 @@ func Create(p *requests.RoleCreateForm) helpers.Response {
 
 	db := config.GetDBInstance()
 
+	role.Name = p.Name
+
 	if result := db.Create(&role); result.Error != nil {
 		log.Println("error Create ")
 		log.Println(result.Error)
