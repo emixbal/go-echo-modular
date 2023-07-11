@@ -21,6 +21,6 @@ func Detail(c echo.Context) error {
 
 	res := actions.Detail(id)
 
-	return c.JSON(res.Status, res)
+	return c.JSON(res.HttpStatus, res)
 
 }

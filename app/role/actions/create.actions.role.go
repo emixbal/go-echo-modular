@@ -21,12 +21,14 @@ func Create(p *requests.RoleCreateForm) helpers.Response {
 		log.Println("error Create ")
 		log.Println(result.Error)
 
-		res.Status = http.StatusInternalServerError
+		res.HttpStatus = http.StatusInternalServerError
+		res.Status = "nok"
 		res.Message = "error save new record"
 		return res
 	}
 
-	res.Status = http.StatusOK
+	res.HttpStatus = http.StatusOK
+	res.Status = "ok"
 	res.Message = "success"
 	res.Data = role
 

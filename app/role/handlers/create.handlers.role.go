@@ -29,6 +29,6 @@ func Create(c echo.Context) error {
 	log.Println(p.Name)
 
 	res := actions.Create(p)
-	return c.JSON(res.Status, res)
+	return c.JSON(res.HttpStatus, res)
 
 }

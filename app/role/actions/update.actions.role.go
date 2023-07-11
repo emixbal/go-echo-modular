@@ -20,12 +20,13 @@ func Update(id string, p *requests.RoleUpdateForm) helpers.Response {
 	result := db.Where("id = ?", id).Take(&role)
 	if result.Error != nil {
 		if is_notfound := errors.Is(result.Error, gorm.ErrRecordNotFound); is_notfound {
-			res.Status = http.StatusOK
+			res.HttpStatus = http.StatusOK
+			res.Status = "nok"
 			res.Message = "can't find record"
 			return res
 		}
 
-		res.Status = http.StatusInternalServerError
+		res.HttpStatus = http.StatusInternalServerError
 		res.Message = "something went wrong"
 		return res
 	}
@@ -33,7 +34,7 @@ func Update(id string, p *requests.RoleUpdateForm) helpers.Response {
 	role.Name = p.Name
 	db.Save(&role)
 
-	res.Status = http.StatusOK
+	res.HttpStatus = http.StatusOK
 	res.Message = "ok"
 	res.Data = role
 

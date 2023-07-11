@@ -13,6 +13,6 @@ func Fetch(c echo.Context) error {
 		"page":     1,
 	})
 
-	return c.JSON(res.Status, res)
+	return c.JSON(res.HttpStatus, res)
 
 }

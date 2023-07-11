@@ -1,7 +1,8 @@
 package helpers
 
 type Response struct {
-	Status  int         `json:"status"`
-	Message string      `json:"message"`
-	Data    interface{} `json:"data"`
+	Status     string      `json:"status"`
+	HttpStatus int         `json:"http_status"`
+	Message    string      `json:"message"`
+	Data       interface{} `json:"data"`
 }

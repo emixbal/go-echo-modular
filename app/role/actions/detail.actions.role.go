@@ -16,19 +16,22 @@ func Detail(id string) helpers.Response {
 
 	db := config.GetDBInstance()
 
-	result := db.Where("is_active = ?", true).First(&role, id)
+	result := db.First(&role, id)
 	if result.Error != nil {
 		if is_notfound := errors.Is(result.Error, gorm.ErrRecordNotFound); is_notfound {
-			res.Status = http.StatusOK
+			res.HttpStatus = http.StatusOK
+			res.Status = "nok"
 			res.Message = "can't find record"
 			return res
 		}
 
-		res.Status = http.StatusInternalServerError
+		res.HttpStatus = http.StatusInternalServerError
+		res.Status = "nok"
 		res.Message = "Something went wrong!"
 		return res
 	}
-	res.Status = http.StatusOK
+	res.HttpStatus = http.StatusOK
+	res.Status = "ok"
 	res.Message = "ok"
 	res.Data = role
 

@@ -37,5 +37,5 @@ func Update(c echo.Context) error {
 	}
 
 	res := actions.Update(id, p)
-	return c.JSON(res.Status, res)
+	return c.JSON(res.HttpStatus, res)
 }

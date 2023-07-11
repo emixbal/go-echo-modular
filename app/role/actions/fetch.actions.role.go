@@ -20,12 +20,14 @@ func Fetch(*echo.Map) helpers.Response {
 		log.Print("error Fetch")
 		log.Print(result.Error)
 
-		res.Status = http.StatusInternalServerError
+		res.HttpStatus = http.StatusInternalServerError
+		res.Status = "nok"
 		res.Message = "error fetchin records"
 		return res
 	}
 
-	res.Status = http.StatusOK
+	res.HttpStatus = http.StatusOK
+	res.Status = "ok"
 	res.Message = "ok"
 	res.Data = roles
 
