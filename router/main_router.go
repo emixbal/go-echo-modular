@@ -2,6 +2,7 @@ package router
 
 import (
 	"go-echo-modular/app/role"
+	"go-echo-modular/app/user"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -14,4 +15,5 @@ func Init(e *echo.Echo) {
 	})
 
 	role.Router(e)
+	user.Router(e)
 }
