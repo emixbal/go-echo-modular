@@ -12,5 +12,6 @@ func Router(e *echo.Echo) {
 	router.GET("", handlers.Fetch)
 	router.GET("/:id", handlers.Detail)
 	router.PUT("/:id", handlers.Update)
+	router.DELETE("/:id", handlers.Delete)
 	router.POST("", handlers.Create)
 }
