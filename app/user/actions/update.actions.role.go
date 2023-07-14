@@ -6,7 +6,6 @@ import (
 	"go-echo-modular/app/user/requests"
 	"go-echo-modular/config"
 	"go-echo-modular/helpers"
-	"net/http"
 
 	"gorm.io/gorm"
 )
@@ -20,13 +19,13 @@ func Update(id string, p *requests.UserUpdateForm) helpers.Response {
 	result := db.Where("id = ?", id).Take(&user)
 	if result.Error != nil {
 		if is_notfound := errors.Is(result.Error, gorm.ErrRecordNotFound); is_notfound {
-			res.HttpStatus = http.StatusOK
+			res.HttpStatus = 400
 			res.Status = "nok"
 			res.Message = "can't find record"
 			return res
 		}
 
-		res.HttpStatus = http.StatusInternalServerError
+		res.HttpStatus = 500
 		res.Message = "something went wrong"
 		return res
 	}
@@ -34,7 +33,7 @@ func Update(id string, p *requests.UserUpdateForm) helpers.Response {
 	user.Name = p.Name
 	db.Save(&user)
 
-	res.HttpStatus = http.StatusOK
+	res.HttpStatus = 200
 	res.Message = "ok"
 	res.Data = user
 
