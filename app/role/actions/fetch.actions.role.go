@@ -5,7 +5,6 @@ import (
 	"go-echo-modular/config"
 	"go-echo-modular/helpers"
 	"log"
-	"net/http"
 
 	"github.com/labstack/echo/v4"
 )
@@ -20,13 +19,13 @@ func Fetch(*echo.Map) helpers.Response {
 		log.Print("error Fetch")
 		log.Print(result.Error)
 
-		res.HttpStatus = http.StatusInternalServerError
+		res.HttpStatus = 500
 		res.Status = "nok"
 		res.Message = "error fetchin records"
 		return res
 	}
 
-	res.HttpStatus = http.StatusOK
+	res.HttpStatus = 200
 	res.Status = "ok"
 	res.Message = "ok"
 	res.Data = roles

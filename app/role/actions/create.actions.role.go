@@ -6,7 +6,6 @@ import (
 	"go-echo-modular/config"
 	"go-echo-modular/helpers"
 	"log"
-	"net/http"
 )
 
 func Create(p *requests.RoleCreateForm) helpers.Response {
@@ -21,13 +20,13 @@ func Create(p *requests.RoleCreateForm) helpers.Response {
 		log.Println("error Create ")
 		log.Println(result.Error)
 
-		res.HttpStatus = http.StatusInternalServerError
+		res.HttpStatus = 500
 		res.Status = "nok"
 		res.Message = "error save new record"
 		return res
 	}
 
-	res.HttpStatus = http.StatusOK
+	res.HttpStatus = 200
 	res.Status = "ok"
 	res.Message = "success"
 	res.Data = role
