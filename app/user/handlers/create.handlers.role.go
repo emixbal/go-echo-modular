@@ -3,6 +3,7 @@ package handlers
 import (
 	"go-echo-modular/app/user/actions"
 	"go-echo-modular/app/user/requests"
+	"go-echo-modular/helpers"
 	"log"
 
 	"github.com/gookit/validate"
@@ -10,24 +11,30 @@ import (
 )
 
 func Create(c echo.Context) error {
+	var res helpers.Response
+
 	p := new(requests.UserCreateForm)
 	if err := c.Bind(p); err != nil {
 		log.Println(err)
-		return c.JSON(500, echo.Map{
-			"message": "Empty payloads",
-		})
+
+		res.HttpStatus = 500
+		res.Status = "nok"
+		res.Message = "Empty payloads"
+
+		return c.JSON(res.HttpStatus, res)
 	}
 
 	v := validate.Struct(p)
 	if !v.Validate() {
-		return c.JSON(400, echo.Map{
-			"message": v.Errors.One(),
-		})
+
+		res.HttpStatus = 400
+		res.Status = "nok"
+		res.Message = v.Errors.One()
+
+		return c.JSON(res.HttpStatus, res)
 	}
 
-	log.Println(p.Name)
-
-	res := actions.Create(p)
-	return c.JSON(res.HttpStatus, res)
+	result := actions.Create(p)
+	return c.JSON(result.HttpStatus, result)
 
 }

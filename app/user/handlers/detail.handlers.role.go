@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"go-echo-modular/app/user/actions"
+	"go-echo-modular/helpers"
 	"log"
 	"strconv"
 
@@ -9,17 +10,21 @@ import (
 )
 
 func Detail(c echo.Context) error {
+	var res helpers.Response
+
 	id := c.Param("id")
 	_, err := strconv.Atoi(id)
 	if err != nil {
 		log.Println(err)
-		return c.JSON(400, &echo.Map{
-			"message": "invalid user id",
-		})
+
+		res.HttpStatus = 400
+		res.Status = "nok"
+		res.Message = "invalid id"
+
+		return c.JSON(res.HttpStatus, res)
 	}
 
-	res := actions.Detail(id)
-
-	return c.JSON(res.HttpStatus, res)
+	result := actions.Detail(id)
+	return c.JSON(result.HttpStatus, result)
 
 }
