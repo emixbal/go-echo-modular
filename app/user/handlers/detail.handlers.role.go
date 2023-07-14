@@ -3,7 +3,6 @@ package handlers
 import (
 	"go-echo-modular/app/user/actions"
 	"log"
-	"net/http"
 	"strconv"
 
 	"github.com/labstack/echo/v4"
@@ -14,7 +13,7 @@ func Detail(c echo.Context) error {
 	_, err := strconv.Atoi(id)
 	if err != nil {
 		log.Println(err)
-		return c.JSON(http.StatusBadRequest, &echo.Map{
+		return c.JSON(400, &echo.Map{
 			"message": "invalid user id",
 		})
 	}

@@ -3,8 +3,8 @@ package handlers
 import (
 	"go-echo-modular/app/role/actions"
 	"go-echo-modular/app/role/requests"
+	"go-echo-modular/helpers"
 	"log"
-	"net/http"
 	"strconv"
 
 	"github.com/gookit/validate"
@@ -12,30 +12,40 @@ import (
 )
 
 func Update(c echo.Context) error {
+	var res helpers.Response
+
 	id := c.Param("id")
 	_, err := strconv.Atoi(id)
 	if err != nil {
 		log.Println(err)
-		return c.JSON(http.StatusBadRequest, echo.Map{
-			"message": "invalid id",
-		})
+
+		res.HttpStatus = 400
+		res.Status = "nok"
+		res.Message = "invalid id"
+
+		return c.JSON(res.HttpStatus, res)
 	}
 
 	p := new(requests.RoleUpdateForm)
 	if err := c.Bind(p); err != nil {
 		log.Println(err)
-		return c.JSON(http.StatusInternalServerError, echo.Map{
-			"message": "Empty payloads",
-		})
+
+		res.HttpStatus = 500
+		res.Status = "nok"
+		res.Message = "Empty payloads"
+
+		return c.JSON(res.HttpStatus, res)
 	}
 
 	v := validate.Struct(p)
 	if !v.Validate() {
-		return c.JSON(http.StatusBadRequest, echo.Map{
-			"message": v.Errors.One(),
-		})
+		res.HttpStatus = 400
+		res.Status = "nok"
+		res.Message = v.Errors.One()
+
+		return c.JSON(res.HttpStatus, res)
 	}
 
-	res := actions.Update(id, p)
-	return c.JSON(res.HttpStatus, res)
+	result := actions.Update(id, p)
+	return c.JSON(result.HttpStatus, result)
 }

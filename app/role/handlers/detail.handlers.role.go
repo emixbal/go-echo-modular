@@ -2,25 +2,30 @@ package handlers
 
 import (
 	"go-echo-modular/app/role/actions"
+	"go-echo-modular/helpers"
 	"log"
-	"net/http"
 	"strconv"
 
 	"github.com/labstack/echo/v4"
 )
 
 func Detail(c echo.Context) error {
+	var res helpers.Response
+
 	id := c.Param("id")
 	_, err := strconv.Atoi(id)
 	if err != nil {
 		log.Println(err)
-		return c.JSON(http.StatusBadRequest, &echo.Map{
-			"message": "invalid user id",
-		})
+
+		res.HttpStatus = 400
+		res.Status = "nok"
+		res.Message = "invalid id"
+
+		return c.JSON(res.HttpStatus, res)
 	}
 
-	res := actions.Detail(id)
+	result := actions.Detail(id)
 
-	return c.JSON(res.HttpStatus, res)
+	return c.JSON(result.HttpStatus, result)
 
 }
